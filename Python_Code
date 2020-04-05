@@ -1,0 +1,112 @@
+class CoffeeMachine:
+
+    def __init__(self):
+        self.ml_water = 400
+        self.ml_milk = 540
+        self.gr_coffee = 120
+        self.num_cups = 9
+        self.num_money = 550
+
+    def automate(self, user_input=None):
+        while True:
+            print("Write action (buy, fill, take, remaining, exit):")
+            self.user_input = input()
+            if self.user_input == "buy":
+                self.choosing_coffee()
+            if self.user_input == "fill":
+                self.filling_machine()
+            if self.user_input == "take":
+                self.taking_money()
+            if self.user_input == "remaining":
+                self.asking_remaining()
+            if self.user_input == "exit":
+                break
+
+    def show_status_products(self):
+        print()
+        print("The coffee machine has:")
+        print(self.ml_water, "of water")
+        print(self.ml_milk, "of milk")
+        print(self.gr_coffee, "of coffee beans")
+        print(self.num_cups, "of disposable cups")
+        print("$", self.num_money, " of money", sep='')
+        print()
+
+    def check_if_enough(self, water, milk, coffee, cups):
+        if int(self.ml_water - water) < 0:
+            print("Sorry, not enough water!")
+            return "0"
+        elif int(self.ml_milk - milk) < 0:
+            print("Sorry, not enough milk!")
+            return "0"
+        elif int(self.gr_coffee - coffee) < 0:
+            print("Sorry, not enough coffee beans!")
+            return "0"
+        elif int(self.num_cups - cups) < 0:
+            print("Sorry, not enough disposable cups!")
+            return "0"
+        else:
+            print("I have enough resources, making you a coffee!")
+            return "1"
+
+    def choosing_coffee(self):
+        print()
+        print("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:")
+        user_choice = input()
+        if user_choice == "back":
+            print()
+            #continue
+        if user_choice == "1":
+            if self.check_if_enough(250, 0, 16, 1) == "0":
+                print()
+                #continue
+            else:
+                self.ml_water -= 250
+                self.gr_coffee -= 16
+                self.num_cups -= 1
+                self.num_money += 4
+        if user_choice == "2":
+            if self.check_if_enough(350, 75, 20, 1) == "0":
+                print()
+                #continue
+            else:
+                self.ml_water -= 350
+                self.ml_milk -= 75
+                self.gr_coffee -= 20
+                self.num_cups -= 1
+                self.num_money += 7
+        if user_choice == "3":
+            if self.check_if_enough(200, 100, 12, 1) == "0":
+                print()
+                #continue
+            else:
+                self.ml_water -= 200
+                self.ml_milk -= 100
+                self.gr_coffee -= 12
+                self.num_cups -= 1
+                self.num_money += 6
+        print()
+
+    def filling_machine(self):
+        print()
+        print("Write how many ml of water do you want to add:")
+        self.ml_water += int(input())
+        print("Write how many ml of milk do you want to add:")
+        self.ml_milk += int(input())
+        print("Write how many grams of coffee beans do you want to add:")
+        self.gr_coffee += int(input())
+        print("Write how many disposable cups of coffee do you want to add:")
+        self.num_cups += int(input())
+        print()
+
+    def taking_money(self):
+        print()
+        print("I gave you $", self.num_money, sep='')
+        self.num_money = 0
+        print()
+
+    def asking_remaining(self):
+        self.show_status_products()
+
+tassimo = CoffeeMachine()
+tassimo.automate()
